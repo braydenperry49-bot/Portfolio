@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&family=Merriweather:wght@300;400;700&family=Lora:wght@400;600&family=Spectral:wght@300;400;600&family=Montserrat:wght@400;600;700&family=Raleway:wght@300;400;600&family=Poppins:wght@300;400;600&family=Inter:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Roboto:wght@300;400;700&family=Lato:wght@300;400;700&family=Source+Sans+Pro:wght@400;600;700&family=Nunito:wght@400;600;700&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a1628;
+            --dark-navy: #050b14;
+            --gold: #d4af37;
+            --cream: #f8f6f0;
+            --gray: #8a8a8a;
+            --light-gray: #e8e8e8;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 900;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Landing Page */
+        .landing-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: var(--navy);
+            color: var(--cream);
+        }
+
+        .landing-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .landing-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 5rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .landing-description {
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .landing-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .landing-btn {
+            padding: 1.25rem 2.5rem;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .landing-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-header {
+            background: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(10, 22, 40, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(10, 22, 40, 0.15);
+        }
+
+        .onepager-preview {
+            width: 100%;
+            height: 500px;
+            background: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .onepager-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: white;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 22, 40, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .onepager-preview:hover .preview-overlay {
+            opacity: 1;
+        }
+
+        .preview-text {
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--navy);
+            text-align: center;
+        }
+
+        .project-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .download-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--navy);
+            color: var(--cream);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border: none;
+        }
+
+        .download-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+        }
+
+        .edit-btn {
+            background: #2196F3;
+            margin-top: 1rem;
+        }
+
+        .edit-btn:hover {
+            background: #1976D2;
+        }
+
+        .delete-btn {
+            background: #d32f2f;
+            margin-top: 0.5rem;
+        }
+
+        .delete-btn:hover {
+            background: #b71c1c;
+        }
+
+        /* Hide admin-only buttons when not logged in */
+        .admin-only {
+            display: none;
+        }
+
+        body.admin-logged-in .admin-only {
+            display: flex;
+        }
+
+        /* About Me Page */
+        .about-section {
+            background: var(--white);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(10, 22, 40, 0.05);
+        }
+
+        .about-section h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .about-content {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background: var(--cream);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--gold);
+        }
+
+        .job-item, .education-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .job-item:last-child, .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .job-title, .education-degree {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-company, .education-school {
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-date, .education-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Admin Toggle */
+        .admin-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .admin-btn {
+            background: var(--navy);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .admin-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 22, 40, 0.95);
+            z-index: 999;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--cream);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .close-admin {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .admin-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .admin-tab.active {
+            color: var(--navy);
+            border-bottom-color: var(--gold);
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .upload-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--light-gray);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1rem;
+            background: var(--navy);
+            color: var(--cream);
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input-label:hover {
+            background: var(--dark-navy);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .submit-btn {
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .submit-btn:hover {
+            background: #c5a028;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .hint-text {
+            background: #e3f2fd;
+            border: 1px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #1565C0;
+        }
+
+        .hint-text strong {
+            color: #0D47A1;
+        }
+
+        .warning-text {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+
+        /* PDF Viewer Modal */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .pdf-modal.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .pdf-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .pdf-viewer {
+            flex: 1;
+            background: white;
+            border-radius: 4px;
+            overflow: auto;
+        }
+
+        .pdf-viewer img,
+        .pdf-viewer embed {
+            width: 100%;
+            height: 100%;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 22, 40, 0.95);
+            z-index: 2001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: var(--cream);
+            padding: 3rem;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-box h2 {
+            font-family: 'Crimson Pro', serif;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .login-box button:hover {
+            background: #c5a028;
+        }
+
+        .login-error {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Reorder List */
+        .reorder-list {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            min-height: 100px;
+            padding: 0.5rem;
+        }
+
+        .reorder-item {
+            background: var(--cream);
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--gold);
+            cursor: move;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .reorder-item:hover {
+            background: var(--light-gray);
+            transform: translateX(4px);
+        }
+
+        .reorder-item.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+        }
+
+        .reorder-item.drag-over {
+            border-top: 3px solid var(--gold);
+            margin-top: 1rem;
+        }
+
+        .reorder-handle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            cursor: grab;
+        }
+
+        .reorder-handle:active {
+            cursor: grabbing;
+        }
+
+        .reorder-item-text {
+            flex: 1;
+            font-weight: 500;
+            color: var(--navy);
+        }
+
+        .reorder-number {
+            background: var(--navy);
+            color: var(--gold);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .reorder-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .landing-title {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+            }
+
+            .landing-buttons {
+                flex-direction: column;
+            }
+
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+
+            .admin-header > div {
+                flex-wrap: wrap;
+                gap: 0.5rem !important;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="mainNav" style="display: none;">
+        <div class="nav-content">
+            <div class="nav-brand" onclick="showPage('landing')">Portfolio</div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('personal')">Personal Projects</a></li>
+                <li><a onclick="showPage('professional')">Professional Projects</a></li>
+                <li><a onclick="showPage('about')">About Me</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <div id="landingPage" class="landing-page">
+        <div class="landing-background" id="landingBg"></div>
+        <div class="landing-content">
+            <h1 class="landing-title" id="landingTitle">Investment Portfolio</h1>
+            <p class="landing-description" id="landingDesc">Showcasing strategic analysis, investment research, and professional insights</p>
+            <div class="landing-buttons">
+                <a class="landing-btn" onclick="showPage('personal')">Personal Projects</a>
+                <a class="landing-btn" onclick="showPage('professional')">Professional Projects</a>
+                <a class="landing-btn" onclick="showPage('about')">About Me</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Projects Page -->
+    <div id="personalPage" class="page-section">
+        <div class="page-header">
+            <h1 class="page-title">Personal Projects</h1>
+            <p class="page-subtitle">Independent Research & Analysis</p>
+        </div>
+        <div class="container">
+            <div id="personalGrid" class="projects-grid"></div>
+        </div>
+    </div>
+
+    <!-- Professional Projects Page -->
+    <div id="professionalPage" class="page-section">
+        <div class="page-header">
+            <h1 class="page-title">Professional Projects</h1>
+            <p class="page-subtitle">Client Work & Institutional Research</p>
+        </div>
+        <div class="container">
+            <div id="professionalGrid" class="projects-grid"></div>
+        </div>
+    </div>
+
+    <!-- About Me Page -->
+    <div id="aboutPage" class="page-section">
+        <div class="page-header">
+            <h1 class="page-title">About Me</h1>
+            <p class="page-subtitle">Background & Experience</p>
+        </div>
+        <div class="container">
+            <div class="about-section" style="text-align: center;">
+                <div style="margin-bottom: 2rem;">
+                    <img id="profilePhoto" src="" alt="Profile Photo" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none;">
+                    <div id="profilePhotoPlaceholder" style="width: 200px; height: 200px; border-radius: 50%; background: var(--light-gray); display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 4px solid var(--gold);">
+                        <span style="color: var(--gray); font-size: 3rem;">👤</span>
+                    </div>
+                </div>
+                <div id="resumeSection" style="display: none; margin-bottom: 2rem;">
+                    <a id="resumeLink" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: var(--gold); color: var(--navy); text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                        📄 View Resume
+                    </a>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>Introduction</h2>
+                <div class="about-content" id="introContent">
+                    <p>Add your introduction in the admin panel...</p>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>Education</h2>
+                <div id="educationContent" class="about-content"></div>
+            </div>
+
+            <div class="about-section">
+                <h2>Professional Experience</h2>
+                <div id="jobContent" class="about-content"></div>
+            </div>
+
+            <div class="about-section">
+                <h2>Technical Skills</h2>
+                <div id="hardSkillsContent" class="skills-grid"></div>
+            </div>
+
+            <div class="about-section">
+                <h2>Soft Skills</h2>
+                <div id="softSkillsContent" class="skills-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Toggle - Only visible after login -->
+    <div class="admin-toggle" id="adminToggle" style="display: none;">
+        <button class="admin-btn" onclick="toggleAdmin()">Manage Portfolio</button>
+    </div>
+
+    <!-- Admin Login Button - Always visible -->
+    <div class="admin-toggle" id="loginToggle">
+        <button class="admin-btn" onclick="showLoginPrompt()">🔐 Admin</button>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Portfolio Management</h2>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="admin-btn" style="padding: 0.75rem 1rem; font-size: 0.8rem;" onclick="exportData()">📥 Export</button>
+                    <button class="admin-btn" style="padding: 0.75rem 1rem; font-size: 0.8rem;" onclick="document.getElementById('importFile').click()">📤 Import</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                    <button class="admin-btn" style="padding: 0.75rem 1rem; font-size: 0.8rem; background: #d32f2f;" onclick="logout()">Logout</button>
+                    <button class="close-admin" onclick="toggleAdmin()">×</button>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchTab('projects')">Projects</button>
+                <button class="admin-tab" onclick="switchTab('landing')">Landing Page</button>
+                <button class="admin-tab" onclick="switchTab('about')">About Me</button>
+                <button class="admin-tab" onclick="switchTab('customize')">Customize Theme</button>
+                <button class="admin-tab" onclick="switchTab('setup')">File Setup</button>
+            </div>
+
+            <!-- Projects Section -->
+            <div id="projectsAdmin" class="admin-section active">
+                
+                <!-- Reorder Projects Section -->
+                <div class="upload-section" style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy);">Reorder Projects</h3>
+                    <div class="hint-text">
+                        <strong>📌 Drag & Drop:</strong> Click and hold a project, then drag it up or down to reorder. Changes save automatically!
+                    </div>
+                    
+                    <div style="display: flex; gap: 2rem;">
+                        <div style="flex: 1;">
+                            <h4 style="margin-bottom: 1rem; color: var(--navy);">Personal Projects</h4>
+                            <div id="personalReorderList" class="reorder-list"></div>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="margin-bottom: 1rem; color: var(--navy);">Professional Projects</h4>
+                            <div id="professionalReorderList" class="reorder-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy);" id="formTitle">Add New Project</h3>
+                    
+                    <div class="hint-text">
+                        <strong>💾 Hybrid Storage:</strong> Preview images stored locally (small), PDFs hosted on GitHub (external links). No more storage limits!
+                    </div>
+
+                    <form id="uploadForm">
+                        <input type="hidden" id="editingId">
+                        
+                        <div class="form-group">
+                            <label>Project Category</label>
+                            <select id="projectCategory" required>
+                                <option value="">Select category...</option>
+                                <option value="personal">Personal Projects</option>
+                                <option value="professional">Professional Projects</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" id="projectTitle" placeholder="e.g., Fabrinet - High-Flying Technology Hardware" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description (Optional)</label>
+                            <textarea id="projectDescription" placeholder="Brief description..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Preview Image (PNG/JPG - stored locally)</label>
+                            <div class="file-input-wrapper">
+                                <label class="file-input-label" for="previewFile">Choose Preview Image</label>
+                                <input type="file" id="previewFile" accept=".png,.jpg,.jpeg" required>
+                                <div class="file-name" id="previewFileName">No file chosen</div>
+                            </div>
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                This is your one-pager image. Keep under 500KB!
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pitch Deck Filename (hosted on GitHub)</label>
+                            <input type="text" id="deckFilename" placeholder="files/fabrinet-deck.pdf" required>
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Enter the path to your PDF file on GitHub (e.g., "files/fabrinet-deck.pdf")
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>One-Pager Filename (hosted on GitHub)</label>
+                            <input type="text" id="onepagerFilename" placeholder="files/fabrinet-onepager.pdf" required>
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Enter the path to your one-pager PDF on GitHub (e.g., "files/fabrinet-onepager.pdf")
+                            </small>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">Add to Portfolio</button>
+                        <button type="button" class="submit-btn" id="cancelEditBtn" style="background: #757575; display: none; margin-top: 0.5rem;" onclick="cancelEdit()">Cancel Edit</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Landing Page Admin -->
+            <div id="landingAdmin" class="admin-section">
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy);">Customize Landing Page</h3>
+                    
+                    <form id="landingForm">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="landingTitleInput" placeholder="Your Name or Portfolio Title">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="landingDescInput" placeholder="Brief tagline or description"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Background Image URL (Optional)</label>
+                            <input type="text" id="landingBgUrl" placeholder="files/background.jpg">
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Upload image to GitHub, then enter path (e.g., "files/background.jpg")
+                            </small>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Save Landing Page</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- About Me Admin -->
+            <div id="aboutAdmin" class="admin-section">
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy);">About Me Content</h3>
+                    
+                    <form id="aboutForm">
+                        <div class="form-group">
+                            <label>Profile Photo URL (hosted on GitHub)</label>
+                            <input type="text" id="profilePhotoUrl" placeholder="files/profile-photo.jpg">
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Upload your photo to GitHub, then enter path (e.g., "files/profile-photo.jpg")
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Resume PDF URL (hosted on GitHub)</label>
+                            <input type="text" id="resumeUrl" placeholder="files/resume.pdf">
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Upload your resume to GitHub, then enter path (e.g., "files/resume.pdf")
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Introduction</label>
+                            <textarea id="introInput" placeholder="Write your professional introduction..." style="min-height: 150px;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Education (JSON format)</label>
+                            <textarea id="educationInput" placeholder='[{"degree": "MBA", "school": "Harvard Business School", "date": "2020-2022", "details": "Focus on Finance"}]' style="min-height: 150px;"></textarea>
+                            <small style="color: var(--gray);">Each entry: {"degree": "...", "school": "...", "date": "...", "details": "..."}</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Job History (JSON format)</label>
+                            <textarea id="jobInput" placeholder='[{"title": "Investment Analyst", "company": "Goldman Sachs", "date": "2022-Present", "description": "..."}]' style="min-height: 150px;"></textarea>
+                            <small style="color: var(--gray);">Each entry: {"title": "...", "company": "...", "date": "...", "description": "..."}</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hard Skills (comma-separated)</label>
+                            <textarea id="hardSkillsInput" placeholder="Financial Modeling, Python, SQL, Excel, Bloomberg Terminal"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Soft Skills (comma-separated)</label>
+                            <textarea id="softSkillsInput" placeholder="Leadership, Communication, Critical Thinking, Problem Solving"></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Save About Me</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Customize Theme Section -->
+            <div id="customizeAdmin" class="admin-section">
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy);">🎨 Customize Theme</h3>
+                    
+                    <div class="hint-text">
+                        <strong>🎨 Personalize Your Portfolio:</strong> Change colors and fonts to match your style. Changes apply instantly!
+                    </div>
+
+                    <form id="customizeForm">
+                        <h4 style="margin: 2rem 0 1rem; color: var(--navy);">Colors</h4>
+                        
+                        <div class="form-group">
+                            <label>Primary Color (Navy)</label>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="color" id="navyColor" value="#0a1628" style="width: 80px; height: 50px; cursor: pointer;">
+                                <input type="text" id="navyColorText" value="#0a1628" style="width: 120px;">
+                                <small style="color: var(--gray);">Used for headers, navigation, buttons</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Accent Color (Gold)</label>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="color" id="goldColor" value="#d4af37" style="width: 80px; height: 50px; cursor: pointer;">
+                                <input type="text" id="goldColorText" value="#d4af37" style="width: 120px;">
+                                <small style="color: var(--gray);">Used for highlights, links, buttons</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Background Color (Cream)</label>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="color" id="creamColor" value="#f8f6f0" style="width: 80px; height: 50px; cursor: pointer;">
+                                <input type="text" id="creamColorText" value="#f8f6f0" style="width: 120px;">
+                                <small style="color: var(--gray);">Used for page background</small>
+                            </div>
+                        </div>
+
+                        <h4 style="margin: 2rem 0 1rem; color: var(--navy);">Fonts</h4>
+
+                        <div class="form-group">
+                            <label>Heading Font</label>
+                            <select id="headingFont">
+                                <option value="'Crimson Pro', serif">Crimson Pro (Default - Elegant)</option>
+                                <option value="'Playfair Display', serif">Playfair Display (Classic)</option>
+                                <option value="'Merriweather', serif">Merriweather (Traditional)</option>
+                                <option value="'Lora', serif">Lora (Refined)</option>
+                                <option value="'Spectral', serif">Spectral (Modern Serif)</option>
+                                <option value="'Montserrat', sans-serif">Montserrat (Bold Sans)</option>
+                                <option value="'Raleway', sans-serif">Raleway (Clean Sans)</option>
+                                <option value="'Poppins', sans-serif">Poppins (Friendly Sans)</option>
+                            </select>
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Used for titles and headings
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Body Font</label>
+                            <select id="bodyFont">
+                                <option value="'DM Sans', sans-serif">DM Sans (Default - Clean)</option>
+                                <option value="'Inter', sans-serif">Inter (Modern)</option>
+                                <option value="'Open Sans', sans-serif">Open Sans (Friendly)</option>
+                                <option value="'Roboto', sans-serif">Roboto (Professional)</option>
+                                <option value="'Lato', sans-serif">Lato (Rounded)</option>
+                                <option value="'Source Sans Pro', sans-serif">Source Sans Pro (Clear)</option>
+                                <option value="'Nunito', sans-serif">Nunito (Soft)</option>
+                                <option value="'Work Sans', sans-serif">Work Sans (Balanced)</option>
+                            </select>
+                            <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                                Used for body text and descriptions
+                            </small>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <button type="submit" class="submit-btn">Save Theme</button>
+                            <button type="button" class="submit-btn" style="background: #757575;" onclick="resetTheme()">Reset to Default</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- File Setup Instructions -->
+            <div id="setupAdmin" class="admin-section">
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--navy);">📁 File Setup Instructions</h3>
+                    
+                    <div class="warning-text">
+                        <strong>How the Hybrid System Works:</strong><br><br>
+                        <strong>1. Preview Images (Small):</strong> Stored in browser - these are your one-pager images for display<br>
+                        <strong>2. PDF Files (Large):</strong> Hosted on GitHub - these are your pitch decks and one-pagers for download
+                    </div>
+
+                    <h4 style="margin: 2rem 0 1rem; color: var(--navy);">Step 1: Organize Your Files</h4>
+                    <p style="margin-bottom: 1rem; color: var(--gray);">Create this folder structure on your computer:</p>
+                    <pre style="background: var(--white); padding: 1rem; border-radius: 4px; border: 1px solid var(--light-gray); overflow-x: auto;">
+Portfolio/
+├── index.html (this file, renamed)
+├── portfolio-data.json
+└── files/
+    ├── fabrinet-deck.pdf
+    ├── fabrinet-onepager.pdf
+    ├── fabrinet-preview.png
+    ├── lam-deck.pdf
+    ├── lam-onepager.pdf
+    ├── lam-preview.png
+    └── background.jpg
+                    </pre>
+
+                    <h4 style="margin: 2rem 0 1rem; color: var(--navy);">Step 2: Upload to GitHub</h4>
+                    <ol style="color: var(--gray); line-height: 1.8; margin-left: 1.5rem;">
+                        <li>Go to your GitHub repository (yourname.github.io)</li>
+                        <li>Create a folder called "files"</li>
+                        <li>Upload ALL your PDF files and background image to the "files" folder</li>
+                        <li>Upload index.html to the root</li>
+                        <li>Upload portfolio-data.json to the root</li>
+                    </ol>
+
+                    <h4 style="margin: 2rem 0 1rem; color: var(--navy);">Step 3: Add Projects</h4>
+                    <ol style="color: var(--gray); line-height: 1.8; margin-left: 1.5rem;">
+                        <li>Go to "Projects" tab</li>
+                        <li>Upload preview image (PNG/JPG, under 500KB)</li>
+                        <li>Enter pitch deck filename: <code>files/fabrinet-deck.pdf</code></li>
+                        <li>Enter one-pager filename: <code>files/fabrinet-onepager.pdf</code></li>
+                        <li>Click "Add to Portfolio"</li>
+                    </ol>
+
+                    <h4 style="margin: 2rem 0 1rem; color: var(--navy);">Step 4: Export & Upload</h4>
+                    <ol style="color: var(--gray); line-height: 1.8; margin-left: 1.5rem;">
+                        <li>After adding all projects, click "Export"</li>
+                        <li>Upload the new portfolio-data.json to GitHub</li>
+                        <li>Your live site will load everything!</li>
+                    </ol>
+
+                    <div class="hint-text" style="margin-top: 2rem;">
+                        <strong>💡 Pro Tip:</strong> Preview images are tiny (stored locally), but PDFs stay on GitHub (no limits). You can have 100+ projects with this system!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <div class="login-error" id="loginError" style="display: none;"></div>
+            <input type="password" id="passwordInput" placeholder="Enter admin password" onkeypress="if(event.key==='Enter') checkPassword()">
+            <button onclick="checkPassword()">Login</button>
+            <p style="text-align: center; margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">
+                Default password: <code>admin123</code><br>
+                <small>Change this in the code after first login!</small>
+            </p>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-modal-header">
+            <h3 id="pdfTitle"></h3>
+            <button class="pdf-close" onclick="closePdfViewer()">×</button>
+        </div>
+        <div class="pdf-viewer" id="pdfViewer"></div>
+    </div>
+
+    <script>
+        // ============================================
+        // ADMIN PASSWORD - CHANGE THIS AFTER SETUP!
+        // ============================================
+        const ADMIN_PASSWORD = 'admin123'; // <- Change this to your own password
+        
+        // Storage keys
+        const PROJECTS_KEY = 'portfolio_projects_hybrid';
+        const LANDING_KEY = 'portfolio_landing_hybrid';
+        const ABOUT_KEY = 'portfolio_about';
+        const THEME_KEY = 'portfolio_theme';
+        const SESSION_KEY = 'portfolio_admin_session';
+        
+        let projects = [];
+        let landingData = {};
+        let aboutData = {};
+        let themeData = {};
+        let editingProject = null;
+        let isAdminLoggedIn = false;
+
+        // Initialize
+        async function init() {
+            checkAdminSession();
+            await tryAutoLoadData(); // Load from JSON first
+            loadProjects();
+            loadLandingData();
+            loadAboutData();
+            loadTheme();
+            renderAll();
+        }
+
+        // Admin authentication
+        function checkAdminSession() {
+            const session = sessionStorage.getItem(SESSION_KEY);
+            if (session === 'true') {
+                isAdminLoggedIn = true;
+                showAdminControls();
+            }
+        }
+
+        function showLoginPrompt() {
+            document.getElementById('loginModal').classList.add('active');
+            document.getElementById('passwordInput').focus();
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorEl = document.getElementById('loginError');
+            
+            if (input === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem(SESSION_KEY, 'true');
+                showAdminControls();
+                document.getElementById('loginModal').classList.remove('active');
+                document.getElementById('passwordInput').value = '';
+                errorEl.style.display = 'none';
+            } else {
+                errorEl.textContent = 'Incorrect password. Please try again.';
+                errorEl.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function showAdminControls() {
+            document.getElementById('loginToggle').style.display = 'none';
+            document.getElementById('adminToggle').style.display = 'block';
+            document.body.classList.add('admin-logged-in');
+        }
+
+        function logout() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem(SESSION_KEY);
+            document.getElementById('adminToggle').style.display = 'none';
+            document.getElementById('loginToggle').style.display = 'block';
+            document.body.classList.remove('admin-logged-in');
+            toggleAdmin();
+            alert('Logged out successfully');
+        }
+
+        // Export data
+        function exportData() {
+            const exportData = {
+                projects: projects,
+                landing: landingData,
+                about: aboutData,
+                exportDate: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'portfolio-data.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Portfolio data exported!\n\nUpload this JSON file + your PDF files to GitHub.');
+        }
+
+        // Import data
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    if (imported.projects) {
+                        projects = imported.projects;
+                        localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+                    }
+                    
+                    if (imported.landing) {
+                        landingData = imported.landing;
+                        localStorage.setItem(LANDING_KEY, JSON.stringify(landingData));
+                    }
+                    
+                    if (imported.about) {
+                        aboutData = imported.about;
+                        localStorage.setItem(ABOUT_KEY, JSON.stringify(aboutData));
+                    }
+                    
+                    loadLandingData();
+                    loadAboutData();
+                    renderAll();
+                    
+                    alert('✅ Portfolio data imported successfully!');
+                } catch (error) {
+                    alert('❌ Error importing data. Please check the file format.');
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            
+            event.target.value = '';
+        }
+
+        // Try to auto-load portfolio-data.json
+        async function tryAutoLoadData() {
+            try {
+                const response = await fetch('portfolio-data.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Loaded portfolio-data.json from server');
+                    
+                    // Always load from JSON if it exists and has data
+                    if (data.projects && data.projects.length > 0) {
+                        projects = data.projects;
+                        localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+                        console.log('✅ Loaded', projects.length, 'projects from JSON');
+                    }
+                    
+                    if (data.landing) {
+                        landingData = data.landing;
+                        localStorage.setItem(LANDING_KEY, JSON.stringify(landingData));
+                        console.log('✅ Loaded landing data from JSON');
+                    }
+                    
+                    if (data.about) {
+                        aboutData = data.about;
+                        localStorage.setItem(ABOUT_KEY, JSON.stringify(aboutData));
+                        console.log('✅ Loaded about data from JSON');
+                    }
+                }
+            } catch (error) {
+                console.log('ℹ️ No portfolio-data.json found, will use localStorage');
+            }
+        }
+
+        // Load data
+        function loadProjects() {
+            const stored = localStorage.getItem(PROJECTS_KEY);
+            projects = stored ? JSON.parse(stored) : [];
+        }
+
+        function loadLandingData() {
+            const stored = localStorage.getItem(LANDING_KEY);
+            landingData = stored ? JSON.parse(stored) : {
+                title: 'Investment Portfolio',
+                description: 'Showcasing strategic analysis, investment research, and professional insights',
+                background: ''
+            };
+            
+            document.getElementById('landingTitle').textContent = landingData.title;
+            document.getElementById('landingDesc').textContent = landingData.description;
+            if (landingData.background) {
+                document.getElementById('landingBg').style.backgroundImage = `url(${landingData.background})`;
+            }
+            
+            document.getElementById('landingTitleInput').value = landingData.title;
+            document.getElementById('landingDescInput').value = landingData.description;
+            document.getElementById('landingBgUrl').value = landingData.background || '';
+        }
+
+        function loadAboutData() {
+            const stored = localStorage.getItem(ABOUT_KEY);
+            aboutData = stored ? JSON.parse(stored) : {
+                intro: '',
+                profilePhoto: '',
+                resume: '',
+                education: [],
+                jobs: [],
+                hardSkills: [],
+                softSkills: []
+            };
+            
+            document.getElementById('introInput').value = aboutData.intro || '';
+            document.getElementById('profilePhotoUrl').value = aboutData.profilePhoto || '';
+            document.getElementById('resumeUrl').value = aboutData.resume || '';
+            document.getElementById('educationInput').value = JSON.stringify(aboutData.education || [], null, 2);
+            document.getElementById('jobInput').value = JSON.stringify(aboutData.jobs || [], null, 2);
+            document.getElementById('hardSkillsInput').value = (aboutData.hardSkills || []).join(', ');
+            document.getElementById('softSkillsInput').value = (aboutData.softSkills || []).join(', ');
+            
+            renderAboutPage();
+        }
+
+        // Save projects
+        function saveProjects() {
+            try {
+                const data = JSON.stringify(projects);
+                console.log('Saving projects, count:', projects.length);
+                localStorage.setItem(PROJECTS_KEY, data);
+                renderProjects();
+                console.log('✅ Save successful');
+            } catch (error) {
+                console.error('❌ Save error:', error);
+                throw error;
+            }
+        }
+
+        // Page navigation
+        function showPage(page) {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('personalPage').classList.remove('active');
+            document.getElementById('professionalPage').classList.remove('active');
+            document.getElementById('aboutPage').classList.remove('active');
+            document.getElementById('mainNav').style.display = 'none';
+
+            if (page === 'landing') {
+                document.getElementById('landingPage').style.display = 'flex';
+            } else {
+                document.getElementById('mainNav').style.display = 'block';
+                if (page === 'personal') {
+                    document.getElementById('personalPage').classList.add('active');
+                } else if (page === 'professional') {
+                    document.getElementById('professionalPage').classList.add('active');
+                } else if (page === 'about') {
+                    document.getElementById('aboutPage').classList.add('active');
+                }
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // Admin panel
+        function toggleAdmin() {
+            document.getElementById('adminPanel').classList.toggle('active');
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Admin').classList.add('active');
+            
+            // Update reorder lists when switching to projects tab
+            if (tab === 'projects') {
+                renderReorderLists();
+            }
+        }
+
+        // File handling
+        document.getElementById('previewFile').addEventListener('change', function(e) {
+            document.getElementById('previewFileName').textContent = e.target.files[0]?.name || 'No file chosen';
+        });
+
+        // Project form submission
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            try {
+                const title = document.getElementById('projectTitle').value;
+                const description = document.getElementById('projectDescription').value;
+                const category = document.getElementById('projectCategory').value;
+                const previewFile = document.getElementById('previewFile').files[0];
+                const deckFilename = document.getElementById('deckFilename').value;
+                const onepagerFilename = document.getElementById('onepagerFilename').value;
+                const editingId = document.getElementById('editingId').value;
+
+                if (editingId) {
+                    // Editing
+                    const project = projects.find(p => p.id == editingId);
+                    if (!project) {
+                        alert('❌ Project not found!');
+                        return;
+                    }
+                    
+                    project.title = title;
+                    project.description = description;
+                    project.category = category;
+                    project.deckFilename = deckFilename;
+                    project.onepagerFilename = onepagerFilename;
+                    
+                    if (previewFile) {
+                        project.previewImage = await fileToBase64(previewFile);
+                    }
+                    
+                    saveProjects();
+                    alert('✅ Project updated successfully!');
+                } else {
+                    // Adding new
+                    if (!previewFile) {
+                        alert('❌ Please select a preview image');
+                        return;
+                    }
+
+                    const previewData = await fileToBase64(previewFile);
+
+                    const project = {
+                        id: Date.now(),
+                        title,
+                        description,
+                        category,
+                        previewImage: previewData,
+                        deckFilename,
+                        onepagerFilename,
+                        createdAt: new Date().toISOString()
+                    };
+
+                    projects.push(project);
+                    saveProjects();
+                    alert('✅ Project added successfully!');
+                }
+
+                this.reset();
+                cancelEdit();
+                document.getElementById('previewFileName').textContent = 'No file chosen';
+                
+            } catch (error) {
+                console.error('Error saving project:', error);
+                alert('❌ Error saving project: ' + error.message);
+            }
+        });
+
+        // Landing page form
+        document.getElementById('landingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            try {
+                landingData.title = document.getElementById('landingTitleInput').value;
+                landingData.description = document.getElementById('landingDescInput').value;
+                landingData.background = document.getElementById('landingBgUrl').value;
+
+                localStorage.setItem(LANDING_KEY, JSON.stringify(landingData));
+                loadLandingData();
+                alert('✅ Landing page updated successfully!');
+            } catch (error) {
+                console.error('Error saving landing page:', error);
+                alert('❌ Error saving landing page: ' + error.message);
+            }
+        });
+
+        // About form
+        document.getElementById('aboutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            try {
+                aboutData.intro = document.getElementById('introInput').value;
+                aboutData.profilePhoto = document.getElementById('profilePhotoUrl').value;
+                aboutData.resume = document.getElementById('resumeUrl').value;
+                
+                const eduInput = document.getElementById('educationInput').value.trim();
+                aboutData.education = eduInput ? JSON.parse(eduInput) : [];
+                
+                const jobInput = document.getElementById('jobInput').value.trim();
+                aboutData.jobs = jobInput ? JSON.parse(jobInput) : [];
+                
+                aboutData.hardSkills = document.getElementById('hardSkillsInput').value.split(',').map(s => s.trim()).filter(s => s);
+                aboutData.softSkills = document.getElementById('softSkillsInput').value.split(',').map(s => s.trim()).filter(s => s);
+
+                localStorage.setItem(ABOUT_KEY, JSON.stringify(aboutData));
+                loadAboutData();
+                renderAboutPage();
+                alert('✅ About Me updated successfully!');
+            } catch (error) {
+                console.error('Error saving About Me:', error);
+                alert('❌ Error parsing JSON: ' + error.message);
+            }
+        });
+
+        // Edit project
+        function editProject(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            editingProject = project;
+            document.getElementById('editingId').value = project.id;
+            document.getElementById('projectTitle').value = project.title;
+            document.getElementById('projectDescription').value = project.description;
+            document.getElementById('projectCategory').value = project.category;
+            document.getElementById('deckFilename').value = project.deckFilename || '';
+            document.getElementById('onepagerFilename').value = project.onepagerFilename || '';
+            document.getElementById('formTitle').textContent = 'Edit Project';
+            document.getElementById('submitBtn').textContent = 'Update Project';
+            document.getElementById('cancelEditBtn').style.display = 'block';
+            
+            document.getElementById('previewFile').removeAttribute('required');
+            
+            toggleAdmin();
+            switchTab('projects');
+        }
+
+        function cancelEdit() {
+            editingProject = null;
+            document.getElementById('editingId').value = '';
+            document.getElementById('formTitle').textContent = 'Add New Project';
+            document.getElementById('submitBtn').textContent = 'Add to Portfolio';
+            document.getElementById('cancelEditBtn').style.display = 'none';
+            document.getElementById('previewFile').setAttribute('required', 'required');
+        }
+
+        // Delete project
+        function deleteProject(id) {
+            if (confirm('Are you sure you want to delete this project?')) {
+                projects = projects.filter(p => p.id !== id);
+                saveProjects();
+                alert('✅ Project deleted');
+            }
+        }
+
+        // Utility functions
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function openPdfViewer(url, title) {
+            const modal = document.getElementById('pdfModal');
+            const viewer = document.getElementById('pdfViewer');
+            const titleEl = document.getElementById('pdfTitle');
+            
+            titleEl.textContent = title;
+            viewer.innerHTML = `<embed src="${url}" type="application/pdf" width="100%" height="100%">`;
+            modal.classList.add('active');
+        }
+
+        function closePdfViewer() {
+            document.getElementById('pdfModal').classList.remove('active');
+            document.getElementById('pdfViewer').innerHTML = '';
+        }
+
+        function openImageViewer(imageSrc, title) {
+            const modal = document.getElementById('pdfModal');
+            const viewer = document.getElementById('pdfViewer');
+            const titleEl = document.getElementById('pdfTitle');
+            
+            titleEl.textContent = title;
+            viewer.innerHTML = `<img src="${imageSrc}" alt="${title}" style="max-width: 100%; height: auto; margin: 0 auto; display: block;">`;
+            modal.classList.add('active');
+        }
+
+        // Render functions
+        function renderProjects() {
+            const personalGrid = document.getElementById('personalGrid');
+            const professionalGrid = document.getElementById('professionalGrid');
+
+            const personal = projects.filter(p => p.category === 'personal');
+            const professional = projects.filter(p => p.category === 'professional');
+
+            personalGrid.innerHTML = personal.length === 0 
+                ? '<div class="empty-state"><p>No personal projects yet.</p></div>'
+                : personal.map(createProjectCard).join('');
+
+            professionalGrid.innerHTML = professional.length === 0
+                ? '<div class="empty-state"><p>No professional projects yet.</p></div>'
+                : professional.map(createProjectCard).join('');
+        }
+
+        function createProjectCard(project) {
+            return `
+                <div class="project-card">
+                    <div class="onepager-preview" onclick="openImageViewer('${project.previewImage}', '${project.title}')">
+                        <img src="${project.previewImage}" alt="${project.title}">
+                        <div class="preview-overlay">
+                            <span class="preview-text">Click to Enlarge</span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">${project.title}</h3>
+                        ${project.description ? `<p class="project-description">${project.description}</p>` : ''}
+                        <div class="download-buttons">
+                            <a href="${project.deckFilename}" class="download-btn" target="_blank">
+                                📊 Pitch Deck
+                            </a>
+                            <a href="${project.onepagerFilename}" class="download-btn" target="_blank">
+                                📄 One-Pager
+                            </a>
+                        </div>
+                        <button class="download-btn edit-btn admin-only" onclick="editProject(${project.id})">
+                            ✏️ Edit
+                        </button>
+                        <button class="download-btn delete-btn admin-only" onclick="deleteProject(${project.id})">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAboutPage() {
+            // Profile photo
+            const profilePhoto = document.getElementById('profilePhoto');
+            const profilePlaceholder = document.getElementById('profilePhotoPlaceholder');
+            if (aboutData.profilePhoto) {
+                profilePhoto.src = aboutData.profilePhoto;
+                profilePhoto.style.display = 'block';
+                profilePlaceholder.style.display = 'none';
+            } else {
+                profilePhoto.style.display = 'none';
+                profilePlaceholder.style.display = 'flex';
+            }
+            
+            // Resume
+            const resumeSection = document.getElementById('resumeSection');
+            const resumeLink = document.getElementById('resumeLink');
+            if (aboutData.resume) {
+                resumeLink.href = aboutData.resume;
+                resumeSection.style.display = 'block';
+            } else {
+                resumeSection.style.display = 'none';
+            }
+            
+            document.getElementById('introContent').innerHTML = `<p>${aboutData.intro || 'Add your introduction in the admin panel...'}</p>`;
+            
+            const educationHTML = aboutData.education.length === 0 
+                ? '<p style="color: var(--gray);">No education added yet.</p>'
+                : aboutData.education.map(edu => `
+                    <div class="education-item">
+                        <div class="education-degree">${edu.degree}</div>
+                        <div class="education-school">${edu.school}</div>
+                        <div class="education-date">${edu.date}</div>
+                        ${edu.details ? `<p>${edu.details}</p>` : ''}
+                    </div>
+                `).join('');
+            document.getElementById('educationContent').innerHTML = educationHTML;
+            
+            const jobHTML = aboutData.jobs.length === 0
+                ? '<p style="color: var(--gray);">No job history added yet.</p>'
+                : aboutData.jobs.map(job => `
+                    <div class="job-item">
+                        <div class="job-title">${job.title}</div>
+                        <div class="job-company">${job.company}</div>
+                        <div class="job-date">${job.date}</div>
+                        ${job.description ? `<p>${job.description}</p>` : ''}
+                    </div>
+                `).join('');
+            document.getElementById('jobContent').innerHTML = jobHTML;
+            
+            const hardSkillsHTML = aboutData.hardSkills.length === 0
+                ? '<p style="color: var(--gray);">No hard skills added yet.</p>'
+                : aboutData.hardSkills.map(skill => `<div class="skill-item">${skill}</div>`).join('');
+            document.getElementById('hardSkillsContent').innerHTML = hardSkillsHTML;
+            
+            const softSkillsHTML = aboutData.softSkills.length === 0
+                ? '<p style="color: var(--gray);">No soft skills added yet.</p>'
+                : aboutData.softSkills.map(skill => `<div class="skill-item">${skill}</div>`).join('');
+            document.getElementById('softSkillsContent').innerHTML = softSkillsHTML;
+        }
+
+        function renderAll() {
+            renderProjects();
+            renderAboutPage();
+            renderReorderLists();
+        }
+
+        // Theme customization
+        function loadTheme() {
+            const stored = localStorage.getItem(THEME_KEY);
+            themeData = stored ? JSON.parse(stored) : {
+                navyColor: '#0a1628',
+                goldColor: '#d4af37',
+                creamColor: '#f8f6f0',
+                headingFont: "'Crimson Pro', serif",
+                bodyFont: "'DM Sans', sans-serif"
+            };
+            
+            applyTheme();
+            
+            // Set form values
+            document.getElementById('navyColor').value = themeData.navyColor;
+            document.getElementById('navyColorText').value = themeData.navyColor;
+            document.getElementById('goldColor').value = themeData.goldColor;
+            document.getElementById('goldColorText').value = themeData.goldColor;
+            document.getElementById('creamColor').value = themeData.creamColor;
+            document.getElementById('creamColorText').value = themeData.creamColor;
+            document.getElementById('headingFont').value = themeData.headingFont;
+            document.getElementById('bodyFont').value = themeData.bodyFont;
+        }
+
+        function applyTheme() {
+            document.documentElement.style.setProperty('--navy', themeData.navyColor);
+            document.documentElement.style.setProperty('--dark-navy', adjustBrightness(themeData.navyColor, -20));
+            document.documentElement.style.setProperty('--gold', themeData.goldColor);
+            document.documentElement.style.setProperty('--cream', themeData.creamColor);
+            
+            // Apply fonts
+            document.querySelectorAll('.landing-title, .page-title, .section-title, .project-title, h1, h2, h3').forEach(el => {
+                el.style.fontFamily = themeData.headingFont;
+            });
+            
+            document.body.style.fontFamily = themeData.bodyFont;
+        }
+
+        function adjustBrightness(color, percent) {
+            const num = parseInt(color.replace("#",""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 +
+                (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255))
+                .toString(16).slice(1);
+        }
+
+        // Sync color picker with text input
+        document.addEventListener('DOMContentLoaded', function() {
+            ['navy', 'gold', 'cream'].forEach(colorName => {
+                const picker = document.getElementById(colorName + 'Color');
+                const text = document.getElementById(colorName + 'ColorText');
+                
+                if (picker && text) {
+                    picker.addEventListener('input', (e) => {
+                        text.value = e.target.value;
+                    });
+                    
+                    text.addEventListener('input', (e) => {
+                        if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                            picker.value = e.target.value;
+                        }
+                    });
+                }
+            });
+        });
+
+        // Customize form
+        document.getElementById('customizeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            themeData = {
+                navyColor: document.getElementById('navyColor').value,
+                goldColor: document.getElementById('goldColor').value,
+                creamColor: document.getElementById('creamColor').value,
+                headingFont: document.getElementById('headingFont').value,
+                bodyFont: document.getElementById('bodyFont').value
+            };
+            
+            localStorage.setItem(THEME_KEY, JSON.stringify(themeData));
+            applyTheme();
+            alert('✅ Theme updated! Your changes are applied.');
+        });
+
+        function resetTheme() {
+            if (confirm('Reset theme to default colors and fonts?')) {
+                localStorage.removeItem(THEME_KEY);
+                loadTheme();
+                alert('✅ Theme reset to default!');
+            }
+        }
+
+        // Reorder functionality
+        function renderReorderLists() {
+            const personalList = document.getElementById('personalReorderList');
+            const professionalList = document.getElementById('professionalReorderList');
+            
+            const personal = projects.filter(p => p.category === 'personal');
+            const professional = projects.filter(p => p.category === 'professional');
+            
+            personalList.innerHTML = personal.length === 0
+                ? '<div class="reorder-empty">No personal projects yet</div>'
+                : personal.map((p, i) => createReorderItem(p, i + 1)).join('');
+                
+            professionalList.innerHTML = professional.length === 0
+                ? '<div class="reorder-empty">No professional projects yet</div>'
+                : professional.map((p, i) => createReorderItem(p, i + 1)).join('');
+            
+            // Add drag and drop listeners
+            addDragAndDropListeners();
+        }
+
+        function createReorderItem(project, position) {
+            return `
+                <div class="reorder-item" draggable="true" data-id="${project.id}">
+                    <span class="reorder-handle">⋮⋮</span>
+                    <span class="reorder-number">${position}</span>
+                    <span class="reorder-item-text">${project.title}</span>
+                </div>
+            `;
+        }
+
+        let draggedElement = null;
+        let draggedProjectId = null;
+
+        function addDragAndDropListeners() {
+            const items = document.querySelectorAll('.reorder-item');
+            
+            items.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDrop);
+                item.addEventListener('dragend', handleDragEnd);
+                item.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            draggedProjectId = parseInt(this.dataset.id);
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            
+            if (this !== draggedElement) {
+                this.classList.add('drag-over');
+            }
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            this.classList.remove('drag-over');
+            
+            if (draggedElement !== this) {
+                const targetId = parseInt(this.dataset.id);
+                reorderProjects(draggedProjectId, targetId);
+            }
+            
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.reorder-item').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+        }
+
+        function reorderProjects(draggedId, targetId) {
+            const draggedProject = projects.find(p => p.id === draggedId);
+            const targetProject = projects.find(p => p.id === targetId);
+            
+            if (!draggedProject || !targetProject) return;
+            
+            // Only allow reordering within the same category
+            if (draggedProject.category !== targetProject.category) {
+                alert('⚠️ Cannot move between Personal and Professional categories!');
+                return;
+            }
+            
+            // Get projects in this category
+            const categoryProjects = projects.filter(p => p.category === draggedProject.category);
+            const otherProjects = projects.filter(p => p.category !== draggedProject.category);
+            
+            // Find indices
+            const draggedIndex = categoryProjects.findIndex(p => p.id === draggedId);
+            const targetIndex = categoryProjects.findIndex(p => p.id === targetId);
+            
+            // Remove dragged item
+            const [removed] = categoryProjects.splice(draggedIndex, 1);
+            
+            // Insert at new position
+            categoryProjects.splice(targetIndex, 0, removed);
+            
+            // Combine back
+            projects = [...categoryProjects, ...otherProjects];
+            
+            // Save and re-render
+            saveProjects();
+            renderReorderLists();
+            
+            console.log('✅ Projects reordered!');
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
