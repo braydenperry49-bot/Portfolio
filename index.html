@@ -876,8 +876,8 @@
         <div class="nav-content">
             <div class="nav-brand" onclick="showPage('landing')">Portfolio</div>
             <ul class="nav-links">
-                <li><a onclick="showPage('personal')">Personal Projects</a></li>
-                <li><a onclick="showPage('professional')">Professional Projects</a></li>
+                <li><a onclick="showPage('personal')">Other Projects</a></li>
+                <li><a onclick="showPage('professional')">DMG Projects</a></li>
                 <li><a onclick="showPage('about')">About Me</a></li>
             </ul>
         </div>
@@ -890,17 +890,17 @@
             <h1 class="landing-title" id="landingTitle">Investment Portfolio</h1>
             <p class="landing-description" id="landingDesc">Showcasing strategic analysis, investment research, and professional insights</p>
             <div class="landing-buttons">
-                <a class="landing-btn" onclick="showPage('personal')">Personal Projects</a>
-                <a class="landing-btn" onclick="showPage('professional')">Professional Projects</a>
+                <a class="landing-btn" onclick="showPage('personal')">Other Projects</a>
+                <a class="landing-btn" onclick="showPage('professional')">DMG Projects</a>
                 <a class="landing-btn" onclick="showPage('about')">About Me</a>
             </div>
         </div>
     </div>
 
-    <!-- Personal Projects Page -->
+    <!-- Other Projects Page -->
     <div id="personalPage" class="page-section">
         <div class="page-header">
-            <h1 class="page-title">Personal Projects</h1>
+            <h1 class="page-title">Other Projects</h1>
             <p class="page-subtitle">Independent Research & Analysis</p>
         </div>
         <div class="container">
@@ -908,10 +908,10 @@
         </div>
     </div>
 
-    <!-- Professional Projects Page -->
+    <!-- DMG Projects Page -->
     <div id="professionalPage" class="page-section">
         <div class="page-header">
-            <h1 class="page-title">Professional Projects</h1>
+            <h1 class="page-title">DMG Projects</h1>
             <p class="page-subtitle">Financial Analysis & Institutional Research</p>
         </div>
         <div class="container">
@@ -926,24 +926,29 @@
             <p class="page-subtitle">Background & Experience</p>
         </div>
         <div class="container">
-            <div class="about-section" style="text-align: center;">
-                <div style="margin-bottom: 2rem;">
-                    <img id="profilePhoto" src="" alt="Profile Photo" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none;">
-                    <div id="profilePhotoPlaceholder" style="width: 200px; height: 200px; border-radius: 50%; background: var(--light-gray); display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 4px solid var(--gold);">
-                        <span style="color: var(--gray); font-size: 3rem;">👤</span>
+            <!-- Profile Photo, Resume, and Introduction in Two Columns -->
+            <div style="display: flex; gap: 3rem; margin-bottom: 3rem; align-items: flex-start;">
+                <!-- Left Column: Photo + Resume Button -->
+                <div style="flex-shrink: 0;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <img id="profilePhoto" src="" alt="Profile Photo" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none;">
+                        <div id="profilePhotoPlaceholder" style="width: 200px; height: 200px; border-radius: 50%; background: var(--light-gray); display: flex; align-items: center; justify-content: center; border: 4px solid var(--gold);">
+                            <span style="color: var(--gray); font-size: 3rem;">👤</span>
+                        </div>
+                    </div>
+                    <div id="resumeSection" style="display: none; text-align: center;">
+                        <a id="resumeLink" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: var(--gold); color: var(--navy); text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);">
+                            📄 Download Resume
+                        </a>
                     </div>
                 </div>
-                <div id="resumeSection" style="display: none; margin-bottom: 2rem;">
-                    <a id="resumeLink" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: var(--gold); color: var(--navy); text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
-                        📄 View Resume
-                    </a>
-                </div>
-            </div>
-
-            <div class="about-section">
-                <h2>Introduction</h2>
-                <div class="about-content" id="introContent">
-                    <p>Add your introduction in the admin panel...</p>
+                
+                <!-- Right Column: Introduction -->
+                <div style="flex: 1;">
+                    <h2 style="margin-bottom: 1rem;">Introduction</h2>
+                    <div class="about-content" id="introContent">
+                        <p>Add your introduction in the admin panel...</p>
+                    </div>
                 </div>
             </div>
 
@@ -1013,11 +1018,11 @@
                     
                     <div style="display: flex; gap: 2rem;">
                         <div style="flex: 1;">
-                            <h4 style="margin-bottom: 1rem; color: var(--navy);">Personal Projects</h4>
+                            <h4 style="margin-bottom: 1rem; color: var(--navy);">Other Projects</h4>
                             <div id="personalReorderList" class="reorder-list"></div>
                         </div>
                         <div style="flex: 1;">
-                            <h4 style="margin-bottom: 1rem; color: var(--navy);">Professional Projects</h4>
+                            <h4 style="margin-bottom: 1rem; color: var(--navy);">DMG Projects</h4>
                             <div id="professionalReorderList" class="reorder-list"></div>
                         </div>
                     </div>
@@ -1037,8 +1042,8 @@
                             <label>Project Category</label>
                             <select id="projectCategory" required>
                                 <option value="">Select category...</option>
-                                <option value="personal">Personal Projects</option>
-                                <option value="professional">Professional Projects</option>
+                                <option value="personal">Other Projects</option>
+                                <option value="professional">DMG Projects</option>
                             </select>
                         </div>
 
@@ -1144,8 +1149,8 @@
 
                         <div class="form-group">
                             <label>Education (JSON format)</label>
-                            <textarea id="educationInput" placeholder='[{"degree": "MBA", "school": "Harvard Business School", "date": "2020-2022", "details": "Focus on Finance"}]' style="min-height: 150px;"></textarea>
-                            <small style="color: var(--gray);">Each entry: {"degree": "...", "school": "...", "date": "...", "details": "..."}</small>
+                            <textarea id="educationInput" placeholder='[{"degree": "MBA", "school": "Harvard Business School", "date": "2020-2022", "gpa": "3.9", "details": "Focus on Finance"}]' style="min-height: 150px;"></textarea>
+                            <small style="color: var(--gray);">Each entry: {"degree": "...", "school": "...", "date": "...", "gpa": "...", "details": "..."}</small>
                         </div>
 
                         <div class="form-group">
@@ -1884,7 +1889,7 @@ Portfolio/
                     <div class="education-item">
                         <div class="education-degree">${edu.degree}</div>
                         <div class="education-school">${edu.school}</div>
-                        <div class="education-date">${edu.date}</div>
+                        <div class="education-date">${edu.date}${edu.gpa ? ` • GPA: ${edu.gpa}` : ''}</div>
                         ${edu.details ? `<p>${edu.details}</p>` : ''}
                     </div>
                 `).join('');
